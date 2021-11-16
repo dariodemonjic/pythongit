@@ -15,9 +15,12 @@ def registracija():
 
         cur = con.cursor()
         
-        cur.execute("INSERT INTO users VALUES (2,
-                    'ime', 'email', 'safelozinka', 'kontakt', 'today')")
+        cur.execute("INSERT INTO users (name, email, password, kontakt, created_at) VALUES (?,?,?,?,?)",(ime, email, safelozinka, kontakt, today))
         con.commit()
+
+        if(cur.rowcount>0):
+                print("Podatak je zapisan")
+                
         con.close()
         
 
