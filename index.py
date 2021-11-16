@@ -3,6 +3,19 @@ import sqlite3
 from datetime import date
 con = sqlite3.connect('baza.db')
 
+
+def login():
+        ime = input("Unesi ime: ")
+        lozinka = input("Unesi lozinku: ")
+        
+        cur = con.cursor()
+        password=cur.execute("SELECT password FROM users WHERE name = ?", (ime,))
+        password=cur.fetchone();
+        print(password)
+        if(cur.rowcount>0):
+                print("Korisnik postoji \n")
+
+        
 def registracija():
         ime = input("Unesi ime: ")
         email = input("Unesi email: ")
@@ -17,6 +30,7 @@ def registracija():
         
         cur.execute("INSERT INTO users (name, email, password, kontakt, created_at) VALUES (?,?,?,?,?)",(ime, email, safelozinka, kontakt, today))
         con.commit()
+
 
         if(cur.rowcount>0):
                 print("Podatak je zapisan")
@@ -35,14 +49,13 @@ def main():
 
 
     if(unos==2):
-        registracija();
+        registracija()
 
         
         
         
     if(unos==1):
-        email = input("Unesi email: ")
-        lozinka = input("Unesi lozinku: ")
+        login()
 
 
 if __name__=="__main__":
